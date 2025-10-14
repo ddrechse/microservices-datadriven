@@ -13,11 +13,11 @@ RUN set -x && \
 WORKDIR /helidon
 
 # Create a first layer to cache the "Maven World" in the local repository.
-ADD pom.xml .
+COPY pom.xml .
 RUN mvn package -Dmaven.test.skip -Declipselink.weave.skip -DskipOpenApiGenerate
 
 # Do the Maven build with fat JAR!
-ADD src src
+COPY src src
 RUN mvn package -DskipTests
 
 # 2nd stage, build the runtime image
